@@ -29,6 +29,22 @@ float generateTemperature() {
     return dist(gen);
 }
 
+// Alert detection system
+void checkAlerts(int heartRate, int oxygen, float temperature) {
+
+    if(heartRate < 60 || heartRate > 100) {
+        cout << "ALERT: Abnormal Heart Rate\n";
+    }
+
+    if(oxygen < 92) {
+        cout << "ALERT: Low Oxygen Level\n";
+    }
+
+    if(temperature > 38.0) {
+        cout << "ALERT: High Temperature\n";
+    }
+}
+
 int main() {
 
     cout << "Patient Monitoring System Running\n\n";
@@ -41,7 +57,11 @@ int main() {
 
         cout << "Heart Rate: " << heartRate << " bpm\n";
         cout << "Oxygen Level: " << oxygen << " %\n";
-        cout << "Temperature: " << temperature << " C\n\n";
+        cout << "Temperature: " << temperature << " C\n";
+
+        checkAlerts(heartRate, oxygen, temperature);
+
+        cout << "\n";
 
         this_thread::sleep_for(chrono::seconds(1));
     }
