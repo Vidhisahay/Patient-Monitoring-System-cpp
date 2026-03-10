@@ -2,6 +2,7 @@
 #include <random>
 #include <thread>
 #include <chrono>
+#include <fstream>
 
 using namespace std;
 
@@ -29,19 +30,32 @@ float generateTemperature() {
     return dist(gen);
 }
 
+// Logging function
+void logEvent(string message) {
+
+    ofstream logFile("data/logs.txt", ios::app);
+
+    if(logFile.is_open()) {
+        logFile << message << endl;
+    }
+}
+
 // Alert detection system
 void checkAlerts(int heartRate, int oxygen, float temperature) {
 
     if(heartRate < 60 || heartRate > 100) {
         cout << "ALERT: Abnormal Heart Rate\n";
+        logEvent("ALERT: Abnormal Heart Rate");
     }
 
     if(oxygen < 92) {
         cout << "ALERT: Low Oxygen Level\n";
+        logEvent("ALERT: Low Oxygen Level");
     }
 
     if(temperature > 38.0) {
         cout << "ALERT: High Temperature\n";
+        logEvent("ALERT: High Temperature");
     }
 }
 

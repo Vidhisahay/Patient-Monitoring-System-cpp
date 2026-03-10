@@ -1,0 +1,2 @@
+ALERT: Low Oxygen Level
+ALERT: Abnormal Heart Rate
