@@ -1,2 +1,8 @@
 ALERT: Low Oxygen Level
 ALERT: Abnormal Heart Rate
+19:57:40 ALERT: Abnormal Heart Rate
+19:57:42 ALERT: Abnormal Heart Rate
+19:57:43 ALERT: Low Oxygen Level
+19:57:43 ALERT: High Temperature
+19:57:46 ALERT: Low Oxygen Level
+19:57:50 ALERT: Abnormal Heart Rate

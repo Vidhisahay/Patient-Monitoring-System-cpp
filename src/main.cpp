@@ -3,6 +3,7 @@
 #include <thread>
 #include <chrono>
 #include <fstream>
+#include <ctime>
 
 using namespace std;
 
@@ -30,13 +31,28 @@ float generateTemperature() {
     return dist(gen);
 }
 
+string getCurrentTime() {
+
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+
+    char buffer[9];
+
+    sprintf(buffer, "%02d:%02d:%02d",
+        ltm->tm_hour,
+        ltm->tm_min,
+        ltm->tm_sec);
+
+    return string(buffer);
+}
+
 // Logging function
 void logEvent(string message) {
 
     ofstream logFile("data/logs.txt", ios::app);
 
     if(logFile.is_open()) {
-        logFile << message << endl;
+        logFile << getCurrentTime() << " " << message << endl;
     }
 }
 
