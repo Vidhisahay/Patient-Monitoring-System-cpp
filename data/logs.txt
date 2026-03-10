@@ -14,3 +14,20 @@ ALERT: Abnormal Heart Rate
 20:07:42 ALERT: High Temperature
 20:07:46 ALERT: Abnormal Heart Rate
 20:07:46 ALERT: High Temperature
+21:55:34 ALERT: Abnormal Heart Rate
+21:55:34 ALERT: Low Oxygen Level
+21:55:36 ALERT: Abnormal Heart Rate
+21:55:37 ALERT: Abnormal Heart Rate
+21:55:39 ALERT: High Temperature
+21:55:40 ALERT: Abnormal Heart Rate
+21:55:41 ALERT: Abnormal Heart Rate
+22:03:27 ALERT: Abnormal Heart Rate
+22:03:27 ALERT: Low Oxygen Level
+22:03:28 ALERT: Abnormal Heart Rate
+22:03:30 ALERT: High Temperature
+22:03:32 ALERT: Abnormal Heart Rate
+22:03:33 ALERT: Abnormal Heart Rate
+22:03:34 ALERT: Low Oxygen Level
+22:03:35 ALERT: Abnormal Heart Rate
+22:03:36 ALERT: Low Oxygen Level
+22:03:36 ALERT: High Temperature

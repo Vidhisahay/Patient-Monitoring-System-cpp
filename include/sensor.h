@@ -5,4 +5,8 @@ int generateHeartRate();
 int generateOxygenLevel();
 float generateTemperature();
 
+void heartRateSensor();
+void oxygenSensor();
+void temperatureSensor();
+
 #endif
