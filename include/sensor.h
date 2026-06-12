@@ -1,12 +1,12 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-int generateHeartRate();
-int generateOxygenLevel();
-float generateTemperature();
+#include <chrono>
 
-void heartRateSensor();
-void oxygenSensor();
-void temperatureSensor();
+#include "patient_state.h"
+
+void heartRateSensor(MonitorContext& context, std::chrono::milliseconds interval);
+void oxygenSensor(MonitorContext& context, std::chrono::milliseconds interval);
+void temperatureSensor(MonitorContext& context, std::chrono::milliseconds interval);
 
 #endif
