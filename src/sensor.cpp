@@ -1,91 +1,64 @@
+#include <chrono>
+#include <mutex>
 #include <random>
 #include <thread>
-#include <chrono>
-#include <iostream>
 
 #include "sensor.h"
-#include "patient_state.h"
 
-using namespace std;
-
-
-// -------- Sensor Value Generators --------
+namespace {
+std::mt19937 makeGenerator() {
+    thread_local std::random_device randomDevice;
+    return std::mt19937(randomDevice());
+}
 
 int generateHeartRate() {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dist(60,120);
-    return dist(gen);
+    thread_local std::mt19937 generator = makeGenerator();
+    static thread_local std::uniform_int_distribution<int> distribution(60, 120);
+    return distribution(generator);
 }
 
 int generateOxygenLevel() {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dist(90,100);
-    return dist(gen);
+    thread_local std::mt19937 generator = makeGenerator();
+    static thread_local std::uniform_int_distribution<int> distribution(90, 100);
+    return distribution(generator);
 }
 
 float generateTemperature() {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_real_distribution<> dist(36.0,38.5);
-    return dist(gen);
+    thread_local std::mt19937 generator = makeGenerator();
+    static thread_local std::uniform_real_distribution<float> distribution(36.0F, 38.5F);
+    return distribution(generator);
 }
+} // namespace
 
-
-// -------- Sensor Threads --------
-
-void heartRateSensor() {
-
-    while(true) {
-
-        int value = generateHeartRate();
-
-        patientMutex.lock();
-        patientData.heartRate = value;
-        patientMutex.unlock();
-
-        std::cout << "[Heart Sensor Thread ID: "
-                  << std::this_thread::get_id()
-                  << "]\n";
-
-
-        this_thread::sleep_for(chrono::seconds(1));
+void heartRateSensor(MonitorContext& context, std::chrono::milliseconds interval) {
+    while (context.running.load(std::memory_order_relaxed)) {
+        const int value = generateHeartRate();
+        {
+            std::lock_guard<std::mutex> lock(context.patientMutex);
+            context.patientData.heartRate = value;
+        }
+        std::this_thread::sleep_for(interval);
     }
 }
 
-void oxygenSensor() {
-
-    while(true) {
-
-        int value = generateOxygenLevel();
-
-        patientMutex.lock();
-        patientData.oxygen = value;
-        patientMutex.unlock();
-
-        std::cout << "[Oxygen Sensor Thread ID: "
-          << std::this_thread::get_id()
-          << "]\n";
-
-        this_thread::sleep_for(chrono::seconds(1));
+void oxygenSensor(MonitorContext& context, std::chrono::milliseconds interval) {
+    while (context.running.load(std::memory_order_relaxed)) {
+        const int value = generateOxygenLevel();
+        {
+            std::lock_guard<std::mutex> lock(context.patientMutex);
+            context.patientData.oxygen = value;
+        }
+        std::this_thread::sleep_for(interval);
     }
 }
 
-void temperatureSensor() {
-
-    while(true) {
-
-        float value = generateTemperature();
-
-        patientMutex.lock();
-        patientData.temperature = value;
-        patientMutex.unlock();
-
-        std::cout << "[Temp Sensor Thread ID: "
-          << std::this_thread::get_id()
-          << "]\n";
-
-        this_thread::sleep_for(chrono::seconds(1));
+void temperatureSensor(MonitorContext& context, std::chrono::milliseconds interval) {
+    while (context.running.load(std::memory_order_relaxed)) {
+        const float value = generateTemperature();
+        {
+            std::lock_guard<std::mutex> lock(context.patientMutex);
+            context.patientData.temperature = value;
+        }
+        std::this_thread::sleep_for(interval);
     }
 }

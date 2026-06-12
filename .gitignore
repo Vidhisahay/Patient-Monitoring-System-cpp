@@ -1,3 +1,10 @@
 *.exe
 *.o
 *.out
+build/
+build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Testing/
+monitor
